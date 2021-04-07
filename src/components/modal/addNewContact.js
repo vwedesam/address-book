@@ -1,21 +1,31 @@
 import { useRef, useState } from "react";
+import { useAuthContext } from "../../context/auth";
 
+function AddNewContact({ addToContactList }) {
 
-function Modal({ modalState, updateModalState }) {
+    const { authUser } = useAuthContext();
+    const [msg, setMsg] = useState('');
+    const name = useRef();
+    const email = useRef();
+    const phoneNumber = useRef();
+    const closeRef = useRef();
 
-    const [fields, setFields] = useState({});
-    const { name, email, phoneNumber } = fields;
-
-    const handleChange = (e) => {
-        setFields({
-            ...fields,
-            [e.target.name]: e.target.value
-        })
-    }
+    const { uid: userId } = authUser;
 
     const handleSubmit = (e) =>{
         e.preventDefault();
-
+        addToContactList(userId, {
+            name: name.current.value, 
+            email: email.current.value, 
+            phoneNumber: phoneNumber.current.value
+        })
+        .then(res=>{
+            setMsg("contact addedd to List")
+            setTimeout(()=>{
+                closeRef.current.click();
+                setMsg('')
+            }, 2000);
+        })
     }
 
     return (
@@ -25,23 +35,27 @@ function Modal({ modalState, updateModalState }) {
                 <div className="modal-content">
                     <div className="modal-header">
                         <h5 className="modal-title" id="exampleModalCenteredScrollableTitle"> Add New Contact </h5>
-                        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                        <button ref={closeRef} type="button" className="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                         </button>
                     </div>
                     <div className="modal-body">
+                    { msg ? 
+                    <div className="alert bg-white alert-success" role="alert">
+                        <div className="iq-alert-text"> {msg} </div>
+                    </div> : "" }
                     <form onSubmit={handleSubmit}>
                         <div className="form-group">
                             <label className="label-control"> Name </label>
-                            <input type="text" className="form-control" name="name" placeholder="Enter Name ..." value={name} onChange={handleChange} data-change="input" data-custom-target="#note-title" required />
+                            <input type="text" className="form-control" name="name" placeholder="Enter Name ..." ref={name}  required />
                         </div>
                         <div className="form-group">
                             <label className="label-control"> Phone Number </label>
-                            <input type="number" className="form-control" name="phoneNumber" placeholder="Enter Phone Number ..." value={phoneNumber} onChange={handleChange} data-change="input" data-custom-target="#note-title" required />
+                            <input type="number" className="form-control" name="phoneNumber" placeholder="Enter Phone Number ..." ref={phoneNumber} required />
                         </div>
                         <div className="form-group">
                             <label className="label-control"> Email </label>
-                            <input type="email" className="form-control" name="email" placeholder="Enter email ..." value={email} onChange={handleChange} data-change="input" data-custom-target="#note-title" required />
+                            <input type="email" className="form-control" name="email" placeholder="Enter email ..." ref={email} required />
                         </div>
                         <button type="reset" className="btn btn-outline-primary" data-reset="note-reset">
                             <svg width="20" className="svg-icon" id="new-note-reset" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -64,4 +78,4 @@ function Modal({ modalState, updateModalState }) {
     )
 }
 
-export default Modal;
+export default AddNewContact;

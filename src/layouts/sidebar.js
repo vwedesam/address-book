@@ -1,15 +1,25 @@
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
-import Modal from "../components/modal";
+import { NavLink, useHistory } from "react-router-dom";
+import AddNewContact from "../components/modal/addNewContact";
+import { useAuthContext } from "../context/auth";
+import { useContactContext } from "../context/contactList";
 
 
 function Sidebar({ children }) {
+
+    const history = useHistory();
+    const { addToContactList } = useContactContext();
+    const { logOut } = useAuthContext();
+
+    const onLogout = () => {
+        logOut()
+            .then(() => history.push('/login'))
+            .catch(() => history.push('/login'))
+    }
+
     return (
         <>
-            <Modal />
-            <div id="loading">
-                <div id="loading-center"></div>
-            </div>
+            <AddNewContact addToContactList={addToContactList} />
             {/* loader END  */}
             {/* Wrapper Start  */}
             <div className="wrapper">
@@ -40,19 +50,7 @@ function Sidebar({ children }) {
                             <div className="caption">
                                 <h6 className="mb-0 line-height">Bud Wiser</h6>
                             </div>
-                            <i className="fas fa-angle-down"></i>
                         </a>
-                        <div className="dropdown-menu w-100 border-0 my-2" aria-labelledby="dropdownMenuButton">
-                            <NavLink className="dropdown-item mb-2" to="/user-profile">
-                                <i className="las la-user-edit font-size-20 mr-1"></i>
-                                <span>Edit Profile</span>
-                            </NavLink>
-                            <hr className="my-2" />
-                            <button className="dropdown-item" href="auth-sign-in.html">
-                                <i className="las la-sign-out-alt font-size-20 mr-1"></i>
-                                <span>Logout</span>
-                            </button>
-                        </div>
                     </div>
                     <div className="data-scrollbar" data-scroll="1">
                         {/* Add new Contact */}
@@ -65,6 +63,15 @@ function Sidebar({ children }) {
                         <nav className="iq-sidebar-menu">
                             <ul id="iq-sidebar-toggle" className="iq-menu">
                                 <li className="">
+                                    <NavLink to="/user-profile" className="svg-icon">
+                                        <i className="">
+                                            <svg className="svg-icon" id="iq-user-1-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                            </svg>
+                                        </i><span className="">Profile</span>
+                                    </NavLink>
+                                </li>
+                                <li className="">
                                     <NavLink to="/" className="svg-icon">
                                         <i>
                                             <svg className="svg-icon" id="iq-main-1" width="20" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -73,9 +80,17 @@ function Sidebar({ children }) {
                                         </i>
                                         <span>Your Contact List</span>
                                     </NavLink>
-                                    <ul id="index" className="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                                    </ul>
                                 </li>
+                                <li className="">
+                                          <a href="#" onClick={onLogout} className="svg-icon">
+                                              <i className="">
+                                                  <svg className="svg-icon" id="iq-auth-1-1" width="20" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                                                  </svg>
+                                              </i>
+                                              <span className="">Logout</span>
+                                          </a>
+                                      </li>
                                 <li className="">
                                     <a href="/" className="svg-icon">
                                         <i>
@@ -83,7 +98,7 @@ function Sidebar({ children }) {
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" style={{ strokeDasharray: "80px, 100px", strokeDashoffset: "0px" }}></path>
                                             </svg>
                                         </i>
-                                        <span>Bin</span>
+                                        <span> comming soon !!</span>
                                     </a>
                                 </li>
                             </ul>

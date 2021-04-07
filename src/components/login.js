@@ -1,63 +1,76 @@
-import { useState } from "react";
-import { NavLink } from "react-router-dom";
-
+import { useRef, useState } from "react";
+import { NavLink, useHistory } from "react-router-dom";
+import { useAuthContext } from "../context/auth";
 
 function Login() {
 
+    const history = useHistory();
+
     const [fields, setFields] = useState({});
+    const [isValid, setIsValid] = useState(false);
+    const [error, setError] = useState('');
+    const email = useRef();
+    const password  = useRef();
 
-    const { name, email, phoneNumber } = fields;
-
-    const handleChange = (e) => {
-        setFields({
-            ...fields,
-            [e.target.name]: e.target.value
-        })
-    }
+    const { signIn, setIsAuth } = useAuthContext();
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        signIn(email.current.value, password.current.value)
+            .then( async (userCredentials) => {
+                const userId = userCredentials.user.uid;
+                setError('')
+                setIsAuth(true);
+                history.push('/');
+            })
+            .catch(err => {
+                setError(err.message);
+            })
     }
 
     return (
-        <div class="wrapper">
-            <section class="login-content">
-         <div class="container h-100">
-            <div class="row justify-content-center align-items-center height-self-center">
-               <div class="col-md-5 col-sm-12 col-12 align-self-center">
-                  <div class="sign-user_card">   
-                     <div class="logo-detail">            
-                           <div class="d-flex align-items-center"><img src="../assets/images/logo.png" class="img-fluid rounded-normal light-logo logo" alt="logo"/> <h4 class="logo-title ml-3">NotePlus</h4></div>
+        <div className="wrapper">
+            <section className="login-content">
+         <div className="container h-100">
+            <div className="row justify-content-center align-items-center height-self-center">
+               <div className="col-md-5 col-sm-12 col-12 align-self-center">
+                  <div className="sign-user_card">   
+                     <div className="logo-detail">            
+                           <div className="d-flex align-items-center"><img src="../assets/images/logo.png" className="img-fluid rounded-normal light-logo logo" alt="logo"/> <h4 className="logo-title ml-3">NotePlus</h4></div>
                      </div>      
-                     <h3 class="mb-2">Sign In</h3>
+                     <h3 className="mb-2">Sign In</h3>
                      <p>Login to stay connected.</p>
-                     <form>
-                        <div class="row">
-                           <div class="col-lg-12">
-                              <div class="floating-label form-group">
-                                 <input class="floating-input form-control" type="email" placeholder=" "/>
+                     { error ? 
+                     <div className="alert bg-white alert-danger" role="alert">
+                        <div className="iq-alert-text"> {error} </div>
+                     </div> : "" }
+                     <form onSubmit={handleSubmit}>
+                        <div className="row">
+                           <div className="col-lg-12">
+                              <div className="floating-label form-group">
+                                 <input className="floating-input form-control" name="email" ref={email} type="email" required placeholder=" "/>
                                  <label>Email</label>
                               </div>
                            </div>
-                           <div class="col-lg-12">
-                              <div class="floating-label form-group">
-                                 <input class="floating-input form-control" type="password" placeholder=" "/>
+                           <div className="col-lg-12">
+                              <div className="floating-label form-group">
+                                 <input className="floating-input form-control" name="password" ref={password} type="password" required placeholder=" "/>
                                  <label>Password</label>
                               </div>
                            </div>
-                           <div class="col-lg-6">
-                              <div class="custom-control custom-checkbox mb-3 text-left">
-                                 <input type="checkbox" class="custom-control-input" id="customCheck1"/>
-                                 <label class="custom-control-label" for="customCheck1">Remember Me</label>
+                           <div className="col-lg-6">
+                              <div className="custom-control custom-checkbox mb-3 text-left">
+                                 <input type="checkbox" className="custom-control-input" id="customCheck1"/>
+                                 <label className="custom-control-label" htmlFor="customCheck1">Remember Me</label>
                               </div>
                            </div>
-                           <div class="col-lg-6">
-                              <a href="auth-recoverpw.html" class="text-primary float-right">Forgot Password?</a>
+                           <div className="col-lg-6">
+                              <a href="auth-recoverpw.html" className="text-primary float-right">Forgot Password?</a>
                            </div>
                         </div>
-                        <button type="submit" class="btn btn-primary">Sign In</button>
-                        <p class="mt-3 mb-0">
-                           Create an Account <NavLink to="/signup" class="text-primary"><b>Sign Up</b></NavLink>
+                        <button type="submit" className="btn btn-primary">Sign In</button>
+                        <p className="mt-3 mb-0">
+                           Create an Account <NavLink to="/signup" className="text-primary"><b>Sign Up</b></NavLink>
                         </p>
                      </form>
                   </div>

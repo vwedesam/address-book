@@ -1,30 +1,55 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useAuthContext } from "../context/auth";
 import ContentWrapper from "../layouts/contentWrapper";
 import Header from "../layouts/header";
 
 
 function Profile() {
 
-    const [fields, setFields] = useState({});
+   const { changePassword, updateEmail, updateProfile, authUser } = useAuthContext();
+   const [fields, setFields] = useState({displayName:'', email:'', contact:'', photoURL: '' });
+   const [msg, setMsg] = useState('')
+   const passwordRef = useRef();
+   const confirmPasswordRef = useRef();
 
-    const { name, email, phoneNumber } = fields;
+   const { displayName, email, contact, photoURL } = fields;
 
-    const handleChange = (e) => {
-        setFields({
-            ...fields,
-            [e.target.name]: e.target.value
-        })
-    }
+   const handleChange = (e) => {
+      setFields({
+         ...fields,
+         [e.target.name]: e.target.value
+      })
+   }
 
-    const handleSubmit = (e) =>{
-        e.preventDefault();
-        
-    }
+   const handleSubmit = (e) => {
+      e.preventDefault();
+      Promise.all([updateEmail(email), updateProfile(displayName, photoURL)])
+            .then(()=> {
+            
+            })
+            .catch(err => {
+                
+            })
 
-    return (
-        <>
-            <Header title="user Profile" />
-            <ContentWrapper>
+   }
+
+   useEffect(()=>{
+      setFields(authUser);
+   }, [authUser])
+
+   const handleChangePassword = (e) => {
+      e.preventDefault();
+      if (passwordRef.current.value == confirmPasswordRef.current.value) {
+         changePassword();
+         setMsg('')
+      }
+      else setMsg("password do not match confirm passowrd");
+   }
+
+   return (
+      <>
+         <Header title="user Profile" />
+         <ContentWrapper>
 
             <div className="col-lg-12">
                <div className="card">
@@ -33,12 +58,12 @@ function Profile() {
                         <ul className="iq-edit-profile d-flex nav nav-pills">
                            <li className="col-md-3 p-0">
                               <a className="nav-link active" data-toggle="pill" href="#personal-information">
-                              Personal Information
+                                 Personal Information
                               </a>
                            </li>
                            <li className="col-md-3 p-0">
                               <a className="nav-link " data-toggle="pill" href="#chang-pwd">
-                              Change Password
+                                 Change Password
                               </a>
                            </li>
                         </ul>
@@ -46,43 +71,43 @@ function Profile() {
                   </div>
                </div>
             </div>
-               
+
             <div className="col-lg-12">
                <div className="iq-edit-list-data">
                   <div className="tab-content">
                      <div className="tab-pane fade active show" id="personal-information" role="tabpanel">
                         <div className="card">
                            <div className="card-body">
-                              <form>
+                              <form onSubmit={handleSubmit}>
                                  <div className="form-group row align-items-center">
                                     <div className="col-md-12">
                                        <div className="profile-img-edit">
                                           <div className="crm-profile-img-edit">
-                                             <img className="crm-profile-pic avatar-100" src="../assets/images/user/1.jpg" alt="profile-pic"/>
+                                             <img className="crm-profile-pic avatar-100" src={photoURL ? photoURL : "../assets/images/user/1.jpg"} alt="profile-pic" />
                                              <div className="crm-p-image bg-primary">
                                                 <i className="las la-pen upload-button"></i>
                                                 <input className="file-upload" type="file" accept="image/*" />
                                              </div>
-                                          </div>                                          
+                                          </div>
                                        </div>
                                     </div>
                                  </div>
                                  <div className=" row align-items-center">
                                     <div className="form-group col-sm-6">
                                        <label htmlFor="fname">Full Name:</label>
-                                       <input type="text" className="form-control" id="fname" placeholder="Vwede Sam"/>
+                                       <input type="text" className="form-control" id="fname" value={displayName} onChange={handleChange} placeholder="Vwede Sam" required />
                                     </div>
                                     <div className="form-group col-sm-6">
                                        <label htmlFor="lname">Photo URL:</label>
-                                       <input type="text" className="form-control" id="lname" placeholder="http://img.com/test.jpg"/>
+                                       <input type="text" className="form-control" id="lname" value={photoURL} onChange={handleChange} placeholder="http://img.com/test.jpg"  required/>
                                     </div>
                                     <div className="form-group col-sm-6">
                                        <label htmlFor="uname">Email:</label>
-                                       <input type="text" className="form-control" id="uname" placeholder="BudWiser@01"/>
+                                       <input type="text" className="form-control" id="uname" value={email} onChange={handleChange} placeholder="BudWiser@01"  required/>
                                     </div>
                                     <div className="form-group col-sm-6">
                                        <label htmlFor="cname">Phone Number</label>
-                                       <input type="number" className="form-control" id="cname" value="" placeholder="This will be used for accessing your Contact list offline "/>
+                                       <input type="number" title="Contact Admin to Change Phone Number" className="form-control" id="cname" disabled={true} value={contact} placeholder="This will be used for accessing your Contact list offline" required />
                                     </div>
                                  </div>
                                  <button type="submit" className="btn btn-primary mr-2">Submit</button>
@@ -94,14 +119,18 @@ function Profile() {
                      <div className="tab-pane fade" id="chang-pwd" role="tabpanel">
                         <div className="card">
                            <div className="card-body">
-                              <form>
+                              {msg ?
+                                 <div className="alert bg-white alert-success" role="alert">
+                                    <div className="iq-alert-text"> {msg} </div>
+                                 </div> : ""}
+                              <form onSubmit={handleChangePassword}>
                                  <div className="form-group">
                                     <label htmlFor="npass">New Password:</label>
-                                    <input type="Password" className="form-control" id="npass" value=""/>
+                                    <input type="Password" className="form-control" id="npass" ref={passwordRef} required />
                                  </div>
                                  <div className="form-group">
-                                    <label htmlFor="vpass">Verify Password:</label>
-                                    <input type="Password" className="form-control" id="vpass" value=""/>
+                                    <label htmlFor="vpass">Confirm Password:</label>
+                                    <input type="Password" className="form-control" id="vpass" ref={confirmPasswordRef} required />
                                  </div>
                                  <button type="submit" className="btn btn-primary mr-2">Submit</button>
                                  <button type="reset" className="btn iq-bg-danger">Cancel</button>
@@ -109,14 +138,14 @@ function Profile() {
                            </div>
                         </div>
                      </div>
-                     
+
                   </div>
                </div>
             </div>
 
-            </ContentWrapper>
-        </>
-    )
+         </ContentWrapper>
+      </>
+   )
 
 }
 

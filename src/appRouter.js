@@ -1,21 +1,33 @@
 import { Route, BrowserRouter, Switch } from 'react-router-dom'
 import ContactList from './components/contactList'
-import editContact from './components/editContact'
+import EditContact from './components/editContact'
 import Login from './components/login'
 import Profile from './components/profile'
 import SignUp from './components/signup'
 import Sidebar from './layouts/sidebar'
+import ProtectedRoute from './middleware/protectedRoute'
+import UnProtectedRoute from './middleware/unProtectedRoute'
 
 export const AppRouter = () =>{
     return (
         <BrowserRouter>
             <Switch>
-                <Route path="/login" component={Login} exact />
-                <Route path="/signup" component={SignUp} exact />                    
+                <UnProtectedRoute path="/login" exact>
+                    <Login/>
+                </UnProtectedRoute>
+                <UnProtectedRoute path="/signup">
+                    <SignUp/>
+                </UnProtectedRoute>                    
                 <Sidebar>
-                    <Route path="/" component={ContactList} exact />
-                    <Route path="/edit-contact" component={editContact} />
-                    <Route path="/user-profile" component={Profile} />
+                    <ProtectedRoute path="/" exact >
+                        <ContactList/>
+                    </ProtectedRoute>
+                    <ProtectedRoute path="/edit-contact/:contactId" >
+                         <EditContact/>
+                    </ProtectedRoute>
+                    <ProtectedRoute path="/user-profile" >
+                        <Profile/>
+                    </ProtectedRoute>
                 </Sidebar>
             </Switch>
         </BrowserRouter>
