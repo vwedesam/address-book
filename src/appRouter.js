@@ -9,29 +9,33 @@ import Sidebar from './layouts/sidebar'
 import ProtectedRoute from './middleware/protectedRoute'
 import UnProtectedRoute from './middleware/unProtectedRoute'
 import NotFound from './components/notFound'
+import LogOut from './components/auth/logout'
 
-export const AppRouter = () =>{
+export const AppRouter = () => {
     return (
         <BrowserRouter>
             <Switch>
                 <Route path="/lock-screen" component={LockScreen} exact />
                 <UnProtectedRoute path="/login" exact>
-                    <Login/>
+                    <Login />
                 </UnProtectedRoute>
                 <UnProtectedRoute path="/signup">
-                    <SignUp/>
-                </UnProtectedRoute>                    
+                    <SignUp />
+                </UnProtectedRoute>
                 <Sidebar>
                     <ProtectedRoute path="/" exact >
-                        <ContactList/>
+                        <ContactList />
                     </ProtectedRoute>
                     <ProtectedRoute path="/edit-contact/:contactId" >
-                         <EditContact/>
+                        <EditContact />
                     </ProtectedRoute>
                     <ProtectedRoute path="/user-profile" >
-                        <Profile/>
+                        <Profile />
                     </ProtectedRoute>
-                    <Route component={NotFound}/>
+                    <Route path="/logout">
+                        <LogOut />
+                    </Route>
+                    <Route component={NotFound} exact />
                 </Sidebar>
             </Switch>
         </BrowserRouter>

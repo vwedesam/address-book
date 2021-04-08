@@ -18,8 +18,8 @@ function LockScreen() {
                                 <h3 className="mb-2"> Hi ! {isAuth ? authUser.displayName : ""} </h3>
                                 <p> Click here to </p>
                                 {isAuth ? 
-                                <NavLink to="/" className="btn btn-primary">Continue &nbsp; &raquo;</NavLink> :
-                                <NavLink to="/login" className="btn btn-primary">Login &nbsp; &raquo; </NavLink> }
+                                <a href="/" className="btn btn-primary">Continue &nbsp; &raquo;</a> :
+                                <a href="/login" className="btn btn-primary">Login &nbsp; &raquo; </a> }
                             </div>
                         </div>
                     </div>

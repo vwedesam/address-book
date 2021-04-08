@@ -11,7 +11,6 @@ function UnProtectedRoute({ children, ...rest }) {
 
     useEffect(() => {
         setLoading(true);
-        let timeOut;
         const unSubscribe = auth.onAuthStateChanged(function (user) {
             if (user) {
                 // user signed in
@@ -24,7 +23,6 @@ function UnProtectedRoute({ children, ...rest }) {
                 setLoading(false)
             }
         });
-        
     }, [auth])
 
     return (

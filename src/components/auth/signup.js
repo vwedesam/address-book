@@ -54,7 +54,7 @@ function SignUp() {
                 addPhoneNumber(userId, phoneNumber);
                 await updateProfile({  displayName: name,
                     photoURL: '' });
-                history.push('/');
+                history.push('/lock-screen');
             })
             .catch(err => {
                 setError(err.message);

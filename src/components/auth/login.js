@@ -19,7 +19,7 @@ function Login() {
                 const userId = userCredentials.user.uid;
                 setError('')
                 setIsAuth(true);
-                history.push('/');
+                history.push('/lock-screen');
             })
             .catch(err => {
                 setError(err.message);

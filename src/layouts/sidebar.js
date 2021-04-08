@@ -6,23 +6,8 @@ import { useContactContext } from "../context/contactList";
 
 function Sidebar({ children }) {
 
-    const history = useHistory();
     const { addToContactList } = useContactContext();
-    const { logOut, authUser, setIsAuth, setAuthUser } = useAuthContext();
-
-    const onLogout = () => {
-        logOut()
-            .then(() => {
-                setIsAuth(false);
-                setAuthUser({});
-                history.push('/lock-screen')
-            })
-            .catch(() => {
-                setIsAuth(false);
-                setAuthUser({});
-                history.push('/lock-screen')
-            })
-    }
+    const { authUser } = useAuthContext();
 
     const { photoURL } = authUser;
 
@@ -91,7 +76,7 @@ function Sidebar({ children }) {
                                     </NavLink>
                                 </li>
                                 <li className="">
-                                          <a href="#" onClick={onLogout} className="svg-icon">
+                                          <a href="/logout" className="svg-icon">
                                               <i className="">
                                                   <svg className="svg-icon" id="iq-auth-1-1" width="20" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
