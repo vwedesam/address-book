@@ -9,11 +9,8 @@ Index Of Script
 ----------------------------------------------*/
 
 (function(jQuery) {
-
     "use strict";
-
     jQuery(document).ready(function() {
-
         /*---------------------------------------------------------------------
         Tooltip
         -----------------------------------------------------------------------*/
@@ -85,17 +82,14 @@ Index Of Script
 
         parents.addClass('show');
 
-
         parents.parents('li').addClass('active');
         jQuery('li.active > a[aria-expanded="false"]').attr('aria-expanded', 'true');
 
-       
         // /*---------------------------------------------------------------------
         // Page Loader
         // -----------------------------------------------------------------------*/
         // jQuery("#load").fadeOut();
         // jQuery("#loading").delay().fadeOut("");
-
 
         /*---------------------------------------------------------------------
         Progress Bar
@@ -138,7 +132,6 @@ Index Of Script
             jQuery("body").toggleClass("sidebar-main");
         });
 
-
       /*---------------------------------------------------------------------
        Close  navbar Toggle
        -----------------------------------------------------------------------*/
@@ -146,7 +139,6 @@ Index Of Script
         jQuery('.close-toggle').on('click', function () {
             jQuery('.h-collapse.navbar-collapse').collapse('hide');
         });
-
 
         /*---------------------------------------------------------------------
         todo Page
@@ -197,35 +189,6 @@ Index Of Script
             }
         })
 
-        /*---------------------------------------------------------------------
-        Animated SVG ICON
-        -----------------------------------------------------------------------*/
-
-        const settings = $.extend({
-            type: 'oneByOne',
-            start: 'inViewport',
-            dashGap: 10,
-            duration: 100
-        }, 'body' );
-        
-        $('.svg-icon' ).each(function() {
-            const iconID = $(this).attr('id');
-            if(iconID != undefined){
-                const iconVar = iconID.replace( '-', '' );
-                window['iq'+iconVar] = new Vivus( iconID, settings );
-            }     
-        });
-        $(document).on("mouseenter", ".svg-icon", function() {
-            let iconID = $(this).attr('id');
-            
-            if ($(this).find('svg').length > 0) {
-                iconID = $(this).find('svg').attr('id');
-            }
-            if(!iconID) return false;
-            var iconVar = iconID.replace( '-', '' );
-            window['iq'+iconVar].reset().play();
-        });
-    
         /*---------------------------------------------------------------------
         Remove collapse panel
         -----------------------------------------------------------------------*/

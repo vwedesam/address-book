@@ -1,31 +1,39 @@
 import { createContext, useContext } from 'react';
-import { db } from '../firebase';
+import firebase, { db } from '../firebase';
 
 
 const ContactContext = createContext();
-const dbName = "contactList"
+const dbName = "contactList";
+const limit = 2;
 
 export function ContactProvider({ children }){
 
     const getContactlist = (userId) =>{
-        return db.ref(`${dbName}/${userId}`).orderByChild("createdAt");
+        return db.collection(dbName).where('userId', '==', userId)
     }
 
     const addToContactList = (userId, body) =>{
         body.createdAt = Date.now();
-        return db.ref(`${dbName}/${userId}`).push({...body});
+        return db.collection(dbName).add({
+           ...body,
+           userId
+        })
     }
 
-    const getContact = (userId) =>{
-        return db.ref(`${dbName}/${userId}`).get()
+    const getContact = (contactId) =>{
+        return db.collection(dbName).doc(contactId).get()
     }
 
-    const updateContact = (userId, contactId, body) =>{
-        return db.ref(`${dbName}/${userId}/${contactId}`).update({...body})
+    const updateContact = (contactId, body) =>{
+        return db.collection(dbName).doc(contactId).update({...body})
     }
 
-    const deleteContact = (userId, contactId) =>{
-        return db.ref(`${dbName}/${userId}/${contactId}`).remove()
+    const deleteContact = (contactId) =>{
+        return db.collection(dbName).doc(contactId).delete()
+    }
+
+    const onHandleSearch = (q) =>{
+        return db.collection(dbName).where('name', '==', q).get()
     }
 
     return (
@@ -33,6 +41,7 @@ export function ContactProvider({ children }){
             addToContactList,
             getContactlist,
             getContact,
+            onHandleSearch,
             updateContact,
             deleteContact
         }}>

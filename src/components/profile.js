@@ -7,12 +7,13 @@ import Header from "../layouts/header";
 function Profile() {
 
    const { changePassword, updateEmail, updateProfile, authUser } = useAuthContext();
-   const [fields, setFields] = useState({displayName:'', email:'', contact:'', photoURL: '' });
+   const [fields, setFields] = useState({ displayName: '', email: '', contact: '', photoURL: '' });
    const [msg, setMsg] = useState('')
+   const [error, setError] = useState('')
    const passwordRef = useRef();
    const confirmPasswordRef = useRef();
 
-   const { displayName, email, contact, photoURL } = fields;
+   const { displayName, email, contact, photoURL = '' } = fields;
 
    const handleChange = (e) => {
       setFields({
@@ -21,29 +22,37 @@ function Profile() {
       })
    }
 
+   const setResponse = (err, msg) =>{
+         setError(err);
+         setMsg(msg);
+      const timeOut = setTimeout(()=>{
+         setError('')
+         setMsg('')
+         clearTimeout(timeOut);
+      }, 3000);
+   }
    const handleSubmit = (e) => {
       e.preventDefault();
-      Promise.all([updateEmail(email), updateProfile(displayName, photoURL)])
-            .then(()=> {
-            
-            })
-            .catch(err => {
-                
-            })
-
+      Promise.all([updateEmail(email), updateProfile({displayName, photoURL})])
+         .then(() => {
+            setResponse('', 'profile updated successfully !!');
+         })
+         .catch(err => {
+            setResponse(err.message, '');
+         })
    }
 
-   useEffect(()=>{
+   useEffect(() => {
       setFields(authUser);
    }, [authUser])
 
    const handleChangePassword = (e) => {
       e.preventDefault();
       if (passwordRef.current.value == confirmPasswordRef.current.value) {
-         changePassword();
-         setMsg('')
+         changePassword(passwordRef.current.value);
+         setResponse('', 'password changed successfully !!');
       }
-      else setMsg("password do not match confirm passowrd");
+      else setResponse("password do not match confirm passowrd", '');
    }
 
    return (
@@ -77,6 +86,14 @@ function Profile() {
                   <div className="tab-content">
                      <div className="tab-pane fade active show" id="personal-information" role="tabpanel">
                         <div className="card">
+                           {msg ?
+                              <div className="alert bg-white alert-success" role="alert">
+                                 <div className="iq-alert-text"> {msg} </div>
+                              </div> : ""}
+                           {error ?
+                              <div className="alert bg-white alert-danger" role="alert">
+                                 <div className="iq-alert-text"> {error} </div>
+                              </div> : ""}
                            <div className="card-body">
                               <form onSubmit={handleSubmit}>
                                  <div className="form-group row align-items-center">
@@ -95,15 +112,15 @@ function Profile() {
                                  <div className=" row align-items-center">
                                     <div className="form-group col-sm-6">
                                        <label htmlFor="fname">Full Name:</label>
-                                       <input type="text" className="form-control" id="fname" value={displayName} onChange={handleChange} placeholder="Vwede Sam" required />
+                                       <input type="text" className="form-control" id="fname" value={displayName} name="displayName" onChange={handleChange} placeholder="Vwede Sam" required />
                                     </div>
                                     <div className="form-group col-sm-6">
                                        <label htmlFor="lname">Photo URL:</label>
-                                       <input type="text" className="form-control" id="lname" value={photoURL} onChange={handleChange} placeholder="http://img.com/test.jpg"  required/>
+                                       <input type="text" className="form-control" id="lname" value={photoURL} name="photoURL" onChange={handleChange} placeholder="http://img.com/test.jpg" required />
                                     </div>
                                     <div className="form-group col-sm-6">
                                        <label htmlFor="uname">Email:</label>
-                                       <input type="text" className="form-control" id="uname" value={email} onChange={handleChange} placeholder="BudWiser@01"  required/>
+                                       <input type="text" className="form-control" id="uname" value={email} name="email" onChange={handleChange} placeholder="BudWiser@01" required />
                                     </div>
                                     <div className="form-group col-sm-6">
                                        <label htmlFor="cname">Phone Number</label>
@@ -122,6 +139,10 @@ function Profile() {
                               {msg ?
                                  <div className="alert bg-white alert-success" role="alert">
                                     <div className="iq-alert-text"> {msg} </div>
+                                 </div> : ""}
+                              {error ?
+                                 <div className="alert bg-white alert-danger" role="alert">
+                                    <div className="iq-alert-text"> {error} </div>
                                  </div> : ""}
                               <form onSubmit={handleChangePassword}>
                                  <div className="form-group">

@@ -26,7 +26,7 @@ function EditContact() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        updateContact(userId, contactId, {
+        updateContact(contactId, {
             name,
             email,
             phoneNumber
@@ -40,16 +40,16 @@ function EditContact() {
     }
 
     useEffect(() => {
-        getContact(userId)
+        getContact(contactId)
             .then(snapShot => {
-                if(snapShot.child(contactId).exists()) setFields(snapShot.child(contactId).val());
+                if(snapShot.exists) setFields(snapShot.data());
                 else history.push("/");
             })
             .catch(err => {
                 setMsg(err.message)
             })
         return true;
-    }, [userId, contactId]);
+    }, [contactId]);
 
     const { name, email, phoneNumber } = fields;
 

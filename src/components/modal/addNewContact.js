@@ -19,7 +19,7 @@ function AddNewContact({ addToContactList }) {
             email: email.current.value, 
             phoneNumber: phoneNumber.current.value
         })
-        .then(res=>{
+        .then(docRef=>{
             setMsg("contact addedd to List")
             setTimeout(()=>{
                 closeRef.current.click();

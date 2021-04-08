@@ -7,7 +7,6 @@ const phoneDB = "usersPhoneNumber";
 
 export function AuthProvider({ children }){
 
-    const [loading, setLoading] = useState(false); 
     const [isAuth, setIsAuth] = useState(false);
     const [authUser, setAuthUser] = useState({});
 
@@ -16,11 +15,11 @@ export function AuthProvider({ children }){
     }
 
     const changePassword = (newPassword) =>{
-        return auth.updatePassword(newPassword);
+        return auth.currentUser.updatePassword(newPassword);
     }
 
     const updateEmail = (email) =>{
-        return auth.updateCurrentUser(email);
+        return auth.currentUser.updateEmail(email);
     }
 
     const updateProfile = async ({ displayName, photoURL }) => {
@@ -31,20 +30,20 @@ export function AuthProvider({ children }){
     }
 
     const getPhoneNumber = (userId) => {
-        return db.ref(userDB+'/'+userId).get()
+        return db.collection(userDB).doc(userId).get()
     }
     
     const addPhoneNumber = (userId, phoneNumber) => {
-        db.ref(phoneDB+'/'+phoneNumber).set({
+        db.collection(phoneDB).doc(phoneNumber).set({
             userId
         })
-        db.ref('users/'+userId).set({
+        db.collection(userDB).doc(userId).set({
             phoneNumber
         })
     }
     
-    const phoneExist = () => {
-        return db.ref(phoneDB+"").get()
+    const phoneExist = (phoneNumber) => {
+        return db.collection(phoneDB).doc(phoneNumber).get()
     }
 
     const signIn = (email, password) => {

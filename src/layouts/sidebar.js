@@ -9,13 +9,15 @@ function Sidebar({ children }) {
 
     const history = useHistory();
     const { addToContactList } = useContactContext();
-    const { logOut } = useAuthContext();
+    const { logOut, authUser } = useAuthContext();
 
     const onLogout = () => {
         logOut()
             .then(() => history.push('/login'))
             .catch(() => history.push('/login'))
     }
+
+    const { photoURL } = authUser;
 
     return (
         <>
@@ -46,7 +48,7 @@ function Sidebar({ children }) {
                     </div>
                     <div className="sidebar-caption dropdown d-block mt-3">
                         <a href="#" className="iq-user-toggle d-flex align-items-center justify-content-between" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img src="../assets/images/user/1.jpg" className="img-fluid rounded avatar-50 mr-3" alt="user" />
+                            <img src={ photoURL ? photoURL : "../assets/images/user/1.jpg" } className="img-fluid rounded avatar-50 mr-3" alt="user" />
                             <div className="caption">
                                 <h6 className="mb-0 line-height">Bud Wiser</h6>
                             </div>
@@ -92,7 +94,7 @@ function Sidebar({ children }) {
                                           </a>
                                       </li>
                                 <li className="">
-                                    <a href="/" className="svg-icon">
+                                    <a href="#" className="svg-icon">
                                         <i>
                                             <svg width="20" className="svg-icon" id="iq-main-8" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" style={{ strokeDasharray: "80px, 100px", strokeDashoffset: "0px" }}></path>

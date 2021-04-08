@@ -1,6 +1,6 @@
 {
   "name": "address-book",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "description": " address book that displays a list of contacts including their names, phone numbers and email addresses",
   "keywords": ["address", "book", "contact", "list"],

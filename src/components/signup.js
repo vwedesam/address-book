@@ -19,13 +19,14 @@ function SignUp() {
         if (e.target.name == 'confirmPassword') {
             if (password == e.target.value) setIsValid(true);
             else setIsValid(false);
+            setError('')
         }
     }
 
     const checkIfPhoneExist = (e) =>{
-        phoneExist()
+        phoneExist(e.target.value)
         .then(snapShot=> {
-            if(snapShot.child(e.target.value).exists()){
+            if(snapShot.exists){
                 setError('Phone Number Already Exist !!!')
                 setIsValid(false);
             }
@@ -52,7 +53,7 @@ function SignUp() {
                 setIsAuth(true);
                 addPhoneNumber(userId, phoneNumber);
                 await updateProfile({  displayName: name,
-                    photoURL: null });
+                    photoURL: '' });
                 history.push('/');
             })
             .catch(err => {

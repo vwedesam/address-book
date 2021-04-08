@@ -1,13 +1,13 @@
 import { useRef } from "react";
 
 
-function Delete({contactUID, userId, deleteContact}) {
+function Delete({contactUID, deleteContact}) {
 
     const closeRef = useRef();
 
     const handleDelete = async () =>{
         if(contactUID){
-            deleteContact(userId, contactUID);
+            deleteContact(contactUID);
             closeRef.current.click();
         }
     }
