@@ -1,0 +1,70 @@
+[debug] [2021-04-08T09:26:49.892Z] ----------------------------------------------------------------------
+[debug] [2021-04-08T09:26:49.894Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\USER\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy
+[debug] [2021-04-08T09:26:49.895Z] CLI Version:   9.9.0
+[debug] [2021-04-08T09:26:49.895Z] Platform:      win32
+[debug] [2021-04-08T09:26:49.895Z] Node Version:  v14.15.4
+[debug] [2021-04-08T09:26:49.896Z] Time:          Thu Apr 08 2021 10:26:49 GMT+0100 (West Africa Standard Time)
+[debug] [2021-04-08T09:26:49.896Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2021-04-08T09:26:49.906Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2021-04-08T09:26:49.906Z] > authorizing via signed-in user (ycomng@gmail.com)
+[debug] [2021-04-08T09:26:49.907Z] [iam] checking project address-book-3bb94 for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2021-04-08T09:26:49.909Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2021-04-08T09:26:49.909Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2021-04-08T09:27:10.995Z] [iam] error while checking permissions, command may fail: FirebaseError: Authentication Error: Your credentials are no longer valid. Please run firebase login --reauth
+
+For CI servers and headless environments, generate a new token with firebase login:ci
+[debug] [2021-04-08T09:27:11.001Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/address-book-3bb94 [none]
+[debug] [2021-04-08T09:27:32.094Z] Failed to make request to https://firebase.googleapis.com/v1beta1/projects/address-book-3bb94
+[debug] [2021-04-08T09:27:32.507Z] FirebaseError: Failed to make request to https://firebase.googleapis.com/v1beta1/projects/address-book-3bb94
+    at Client.doRequest (C:\Users\USER\AppData\Roaming\npm\node_modules\firebase-tools\lib\apiv2.js:211:19)
+    at processTicksAndRejections (internal/process/task_queues.js:93:5)
+    at async Client.request (C:\Users\USER\AppData\Roaming\npm\node_modules\firebase-tools\lib\apiv2.js:96:20)
+    at async Object.getFirebaseProject (C:\Users\USER\AppData\Roaming\npm\node_modules\firebase-tools\lib\management\projects.js:290:21)
+    at async Object.getDefaultHostingSite (C:\Users\USER\AppData\Roaming\npm\node_modules\firebase-tools\lib\getDefaultHostingSite.js:8:21)
+    at async requireHostingSite (C:\Users\USER\AppData\Roaming\npm\node_modules\firebase-tools\lib\requireHostingSite.js:9:18)
+    at async Object.fn (C:\Users\USER\AppData\Roaming\npm\node_modules\firebase-tools\lib\commands\deploy.js:66:9)
+    at async C:\Users\USER\AppData\Roaming\npm\node_modules\firebase-tools\lib\command.js:169:17
+[error] 
+[error] Error: Failed to get Firebase project address-book-3bb94. Please make sure the project exists and your account has permission to access it.
+[debug] [2021-04-08T09:27:53.000Z] ----------------------------------------------------------------------
+[debug] [2021-04-08T09:27:53.003Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\USER\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy
+[debug] [2021-04-08T09:27:53.003Z] CLI Version:   9.9.0
+[debug] [2021-04-08T09:27:53.003Z] Platform:      win32
+[debug] [2021-04-08T09:27:53.003Z] Node Version:  v14.15.4
+[debug] [2021-04-08T09:27:53.005Z] Time:          Thu Apr 08 2021 10:27:53 GMT+0100 (West Africa Standard Time)
+[debug] [2021-04-08T09:27:53.005Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2021-04-08T09:27:53.015Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2021-04-08T09:27:53.015Z] > authorizing via signed-in user (ycomng@gmail.com)
+[debug] [2021-04-08T09:27:53.015Z] [iam] checking project address-book-3bb94 for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2021-04-08T09:27:53.018Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2021-04-08T09:27:53.018Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2021-04-08T09:27:53.420Z] <<< HTTP RESPONSE 200 {"expires":"Mon, 01 Jan 1990 00:00:00 GMT","cache-control":"no-cache, no-store, max-age=0, must-revalidate","pragma":"no-cache","date":"Thu, 08 Apr 2021 09:27:56 GMT","content-type":"application/json; charset=utf-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","server":"scaffolding on HTTPServer2","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2021-04-08T09:27:53.604Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/address-book-3bb94:testIamPermissions  
+ {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2021-04-08T09:27:54.961Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Thu, 08 Apr 2021 09:27:58 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","server-timing":"gfet4t7; dur=1143","alt-svc":"h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2021-04-08T09:27:54.967Z] > refreshing access token with scopes: []
+[debug] [2021-04-08T09:27:54.967Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2021-04-08T09:28:16.050Z] Authentication Error: Your credentials are no longer valid. Please run firebase login --reauth
+
+For CI servers and headless environments, generate a new token with firebase login:ci
+[debug] [2021-04-08T09:28:16.396Z] FirebaseError: Authentication Error: Your credentials are no longer valid. Please run firebase login --reauth
+
+For CI servers and headless environments, generate a new token with firebase login:ci
+    at invalidCredentialError (C:\Users\USER\AppData\Roaming\npm\node_modules\firebase-tools\lib\auth.js:141:12)
+    at refreshTokens (C:\Users\USER\AppData\Roaming\npm\node_modules\firebase-tools\lib\auth.js:450:15)
+    at processTicksAndRejections (internal/process/task_queues.js:93:5)
+    at async Client.getAccessToken (C:\Users\USER\AppData\Roaming\npm\node_modules\firebase-tools\lib\apiv2.js:144:23)
+    at async Client.addAuthHeader (C:\Users\USER\AppData\Roaming\npm\node_modules\firebase-tools\lib\apiv2.js:135:21)
+    at async Client.request (C:\Users\USER\AppData\Roaming\npm\node_modules\firebase-tools\lib\apiv2.js:93:34)
+    at async Object.getFirebaseProject (C:\Users\USER\AppData\Roaming\npm\node_modules\firebase-tools\lib\management\projects.js:290:21)
+    at async Object.getDefaultHostingSite (C:\Users\USER\AppData\Roaming\npm\node_modules\firebase-tools\lib\getDefaultHostingSite.js:8:21)
+    at async requireHostingSite (C:\Users\USER\AppData\Roaming\npm\node_modules\firebase-tools\lib\requireHostingSite.js:9:18)
+    at async Object.fn (C:\Users\USER\AppData\Roaming\npm\node_modules\firebase-tools\lib\commands\deploy.js:66:9)
+    at async C:\Users\USER\AppData\Roaming\npm\node_modules\firebase-tools\lib\command.js:169:17
+[error] 
+[error] Error: Failed to get Firebase project address-book-3bb94. Please make sure the project exists and your account has permission to access it.

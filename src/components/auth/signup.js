@@ -1,6 +1,6 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { NavLink, useHistory } from 'react-router-dom'
-import { useAuthContext } from "../context/auth";
+import { useAuthContext } from "../../context/auth";
 
 function SignUp() {
 
@@ -69,7 +69,7 @@ function SignUp() {
                         <div className="col-md-5 col-sm-12 col-12 align-self-center">
                             <div className="sign-user_card">
                                 <div className="logo-detail">
-                                    <div className="d-flex align-items-center"><img src="../assets/images/logo.png" className="img-fluid rounded-normal light-logo logo" alt="logo" /> <h4 className="logo-title ml-3">NotePlus</h4></div>
+                                    <div className="d-flex align-items-center"><img src="../assets/images/logo.png" className="img-fluid rounded-normal light-logo logo" alt="logo" /></div>
                                 </div>
                                 <h3 className="mb-2">Sign Up</h3>
                                 <p>Create your  account.</p>

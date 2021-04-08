@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { NavLink, useHistory } from "react-router-dom";
 import AddNewContact from "../components/modal/addNewContact";
 import { useAuthContext } from "../context/auth";
@@ -9,12 +8,20 @@ function Sidebar({ children }) {
 
     const history = useHistory();
     const { addToContactList } = useContactContext();
-    const { logOut, authUser } = useAuthContext();
+    const { logOut, authUser, setIsAuth, setAuthUser } = useAuthContext();
 
     const onLogout = () => {
         logOut()
-            .then(() => history.push('/login'))
-            .catch(() => history.push('/login'))
+            .then(() => {
+                setIsAuth(false);
+                setAuthUser({});
+                history.push('/lock-screen')
+            })
+            .catch(() => {
+                setIsAuth(false);
+                setAuthUser({});
+                history.push('/lock-screen')
+            })
     }
 
     const { photoURL } = authUser;

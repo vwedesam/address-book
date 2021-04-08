@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { useAuthContext } from "../context/auth";
+import { useAuthContext } from "../../context/auth";
 
 function LockScreen() {
 
@@ -13,9 +13,9 @@ function LockScreen() {
                         <div className="col-md-5 col-sm-12 col-12 align-self-center">
                             <div className="sign-user_card">
                                 <div className="logo-detail">
-                                    <div className="d-flex align-items-center"><img src="../assets/images/logo.png" className="img-fluid rounded-normal light-logo logo" alt="logo" /> <h4 className="logo-title ml-3"> Address Book</h4></div>
+                                    <div className="d-flex align-items-center"><img src="../assets/images/logo.png" className="img-fluid rounded-normal light-logo logo" alt="logo" /></div>
                                 </div>
-                                <h3 className="mb-2"> Hi ! {isAuth ? authUser.email : ""} </h3>
+                                <h3 className="mb-2"> Hi ! {isAuth ? authUser.displayName : ""} </h3>
                                 <p> Click here to </p>
                                 {isAuth ? 
                                 <NavLink to="/" className="btn btn-primary">Continue &nbsp; &raquo;</NavLink> :

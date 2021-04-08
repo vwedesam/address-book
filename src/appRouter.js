@@ -1,19 +1,20 @@
 import { Route, BrowserRouter, Switch } from 'react-router-dom'
 import ContactList from './components/contactList'
 import EditContact from './components/editContact'
-import LockScreen from './components/lockscreen'
-import Login from './components/login'
+import LockScreen from './components/auth/lockscreen'
+import Login from './components/auth/login'
 import Profile from './components/profile'
-import SignUp from './components/signup'
+import SignUp from './components/auth/signup'
 import Sidebar from './layouts/sidebar'
 import ProtectedRoute from './middleware/protectedRoute'
 import UnProtectedRoute from './middleware/unProtectedRoute'
+import NotFound from './components/notFound'
 
 export const AppRouter = () =>{
     return (
         <BrowserRouter>
             <Switch>
-                <Route path="/lock-screen" component={LockScreen} />
+                <Route path="/lock-screen" component={LockScreen} exact />
                 <UnProtectedRoute path="/login" exact>
                     <Login/>
                 </UnProtectedRoute>
@@ -30,6 +31,7 @@ export const AppRouter = () =>{
                     <ProtectedRoute path="/user-profile" >
                         <Profile/>
                     </ProtectedRoute>
+                    <Route component={NotFound}/>
                 </Sidebar>
             </Switch>
         </BrowserRouter>
