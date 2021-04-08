@@ -35,7 +35,6 @@ export const AppRouter = () => {
                     <Route path="/logout">
                         <LogOut />
                     </Route>
-                    <Route component={NotFound} exact />
                 </Sidebar>
             </Switch>
         </BrowserRouter>
