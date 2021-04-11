@@ -29,6 +29,10 @@ export function AuthProvider({ children }){
         });
     }
 
+    const resetPassword = (email) => {
+        return auth.sendPasswordResetEmail(email);
+    }
+
     const getPhoneNumber = (userId) => {
         return db.collection(userDB).doc(userId).get()
     }
@@ -64,6 +68,7 @@ export function AuthProvider({ children }){
             changePassword,
             updateEmail,
             updateProfile,
+            resetPassword,
             getPhoneNumber,
             addPhoneNumber,
             phoneExist,

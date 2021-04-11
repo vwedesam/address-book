@@ -63,7 +63,7 @@ function Login() {
                               </div>
                            </div>
                            <div className="col-lg-6">
-                              <a href="auth-recoverpw.html" className="text-primary float-right">Forgot Password?</a>
+                              <NavLink to="reset-password" className="text-primary float-right">Forgot Password?</NavLink>
                            </div>
                         </div>
                         <button type="submit" className="btn btn-primary">Sign In</button>
