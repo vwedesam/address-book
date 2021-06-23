@@ -10,7 +10,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
   address-book /$ npm install
 ```
 
-## Run
+## Run App
 
 ```bash
   address-book/$ npm run start
