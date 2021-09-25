@@ -23,6 +23,6 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 * edit/update contacts 
 * delete contacts
 
- ![user-profile](https://github.com/vwedesam/images/blob/main/address-book/Screenshot%20user-profile.png)
+ ![user-profile](https://github.com/vwedesam/address-book/blob/main/public/assets/Screenshot%20user-profile.png)
  
- ![contact-list](https://github.com/vwedesam/images/blob/main/address-book/Screenshot%20contact-list.png)
+ ![contact-list](https://github.com/vwedesam/address-book/blob/main/public/assets/Screenshot%20contact-list.png)
